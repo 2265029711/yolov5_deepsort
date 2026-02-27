@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+# Word documents
+*.docx
+~$*.docx
+
+# Plan files
+plan.md
+
+# Video files (keep folder structure)
+data/videos/*
+!data/videos/.gitkeep
+
+# Model weights (large files)
+# data/weights/*.pt
+# data/weights/*.pb
+
+# Output results
+results/
+output/
