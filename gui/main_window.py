@@ -92,7 +92,7 @@ class VideoThread(QThread):
         if self.track_options.get('track_person', False):
             target_classes.append('person')
         if self.track_options.get('track_car', False):
-            target_classes.append('car')
+            target_classes.append('vehicle')  # 包含 car, motorcycle, bus, truck
             
         # 颜色映射 (每个track_id一个颜色)
         color_map = {}
@@ -446,8 +446,12 @@ class MainWindow(QMainWindow):
         
         if stats.get('person', 0) > 0:
             parts.append(f"行人: {stats['person']}")
-        if stats.get('car', 0) > 0:
-            parts.append(f"车辆: {stats['car']}")
+        
+        # 合并所有车辆类别 (car, bus, truck, motorcycle)
+        vehicle_count = (stats.get('car', 0) + stats.get('bus', 0) + 
+                        stats.get('truck', 0) + stats.get('motorcycle', 0))
+        if vehicle_count > 0:
+            parts.append(f"车辆: {vehicle_count}")
             
         self.stats_label.setText(" | ".join(parts))
         

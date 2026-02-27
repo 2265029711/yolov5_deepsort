@@ -22,7 +22,13 @@ class YOLOv5Detector:
         7: 'truck',
     }
     
-    # 目标类别名称到ID的映射
+    # 目标类别名称到ID列表的映射 (支持多个ID)
+    CLASS_NAME_TO_IDS = {
+        'person': [0],
+        'vehicle': [2, 3, 5, 7],  # car, motorcycle, bus, truck
+    }
+    
+    # 兼容旧接口
     CLASS_NAME_TO_ID = {
         'person': 0,
         'car': 2,
@@ -101,16 +107,22 @@ class YOLOv5Detector:
         
         Args:
             frame: BGR格式的图像帧 (numpy数组)
-            target_classes: 目标类别列表，如 ['person', 'car']，为None则检测所有类别
+            target_classes: 目标类别列表，如 ['person', 'vehicle']，为None则检测所有类别
             
         Returns:
             检测结果列表，每个元素为 [x1, y1, x2, y2, confidence, class_id, class_name]
         """
-        # 获取目标类别ID
+        # 获取目标类别ID (支持一个类别名映射多个ID)
         target_class_ids = None
         if target_classes:
-            target_class_ids = [self.CLASS_NAME_TO_ID.get(cls, -1) for cls in target_classes]
-            target_class_ids = [cid for cid in target_class_ids if cid >= 0]
+            target_class_ids = []
+            for cls in target_classes:
+                # 优先使用新的多ID映射
+                if cls in self.CLASS_NAME_TO_IDS:
+                    target_class_ids.extend(self.CLASS_NAME_TO_IDS[cls])
+                # 兼容旧的单ID映射
+                elif cls in self.CLASS_NAME_TO_ID:
+                    target_class_ids.append(self.CLASS_NAME_TO_ID[cls])
         
         # 推理
         with torch.no_grad():

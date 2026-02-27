@@ -123,7 +123,7 @@ class ControlPanel(QWidget):
         self.chk_person.setChecked(True)
         self.chk_person.setStyleSheet(self._get_checkbox_style())
         
-        self.chk_car = QCheckBox("车辆 (car)")
+        self.chk_car = QCheckBox("车辆 (vehicle)")
         self.chk_car.setChecked(False)
         self.chk_car.setStyleSheet(self._get_checkbox_style())
         
@@ -306,8 +306,10 @@ class ControlPanel(QWidget):
             self.track_value.setText(str(stats['total']))
         if 'person' in stats:
             self.person_value.setText(str(stats['person']))
-        if 'car' in stats:
-            self.car_value.setText(str(stats['car']))
+        # 合并所有车辆类别 (car, bus, truck, motorcycle)
+        vehicle_count = (stats.get('car', 0) + stats.get('bus', 0) + 
+                        stats.get('truck', 0) + stats.get('motorcycle', 0))
+        self.car_value.setText(str(vehicle_count))
             
     def set_resolution(self, width: int, height: int):
         self.res_value.setText(f"{width}x{height}")
