@@ -28,9 +28,27 @@
 
 ### 1. 克隆项目
 
+由于 `yolov5` 和 `deep_sort` 是独立的第三方仓库，需要分别克隆：
+
 ```bash
+# 克隆主项目
 git clone https://github.com/yourusername/yolov5_deepsort.git
 cd yolov5_deepsort
+
+# 克隆 YOLOv5 仓库
+git clone https://github.com/ultralytics/yolov5.git
+
+# 克隆 DeepSORT 仓库
+git clone https://github.com/nwojke/deep_sort.git
+```
+
+或者使用一行命令：
+
+```bash
+git clone https://github.com/yourusername/yolov5_deepsort.git && \
+cd yolov5_deepsort && \
+git clone https://github.com/ultralytics/yolov5.git && \
+git clone https://github.com/nwojke/deep_sort.git
 ```
 
 ### 2. 创建虚拟环境
@@ -57,9 +75,10 @@ pip install -r requirements.txt
 ```bash
 data/weights/
 ├── yolov5nu.pt
-├── yolov5su.pt
-└── mars-small128.pb  # DeepSORT 特征提取模型（可选）
+└── yolov5su.pt
 ```
+
+可以从 [YOLOv5 Releases](https://github.com/ultralytics/yolov5/releases) 下载预训练权重。
 
 ## 使用方法
 
@@ -84,22 +103,22 @@ python main.py
 yolov5_deepsort/
 ├── main.py                 # 程序入口
 ├── requirements.txt        # 依赖列表
-├── README.md              # 项目说明
-├── .gitignore             # Git 忽略配置
+├── README.md               # 项目说明
+├── .gitignore              # Git 忽略配置
 ├── data/
-│   ├── weights/           # 模型权重
-│   └── videos/            # 测试视频
+│   ├── weights/            # 模型权重
+│   └── videos/             # 测试视频
 ├── gui/
 │   ├── __init__.py
-│   ├── main_window.py     # 主窗口
-│   ├── control_panel.py   # 控制面板
-│   └── video_widget.py    # 视频显示组件
+│   ├── main_window.py      # 主窗口
+│   ├── control_panel.py    # 控制面板
+│   └── video_widget.py     # 视频显示组件
 ├── utils/
 │   ├── __init__.py
-│   ├── detector.py        # YOLOv5 检测器封装
-│   └── tracker.py         # DeepSORT 跟踪器封装
-├── deep_sort/             # DeepSORT 算法实现
-└── yolov5/                # YOLOv5 模型代码
+│   ├── detector.py         # YOLOv5 检测器封装
+│   └── tracker.py          # DeepSORT 跟踪器封装
+├── deep_sort/              # DeepSORT 算法实现 (需单独克隆)
+└── yolov5/                 # YOLOv5 模型代码 (需单独克隆)
 ```
 
 ## 模型选择建议
@@ -114,7 +133,7 @@ yolov5_deepsort/
 ## 注意事项
 
 - 首次运行会自动下载 YOLOv5 模型（如果本地不存在）
-- DeepSORT 的 TensorFlow 特征提取模型为可选组件，缺失时使用备用特征提取方法
+- DeepSORT 使用轻量级特征提取方法，无需额外依赖
 - 建议使用 GPU 以获得更好的实时性能
 
 ## 技术栈

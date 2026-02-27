@@ -55,9 +55,9 @@ plan.md
 data/videos/*
 !data/videos/.gitkeep
 
-# Model weights (large files)
-# data/weights/*.pt
-# data/weights/*.pb
+# Third-party repositories (clone separately)
+yolov5/
+deep_sort/
 
 # Output results
 results/
